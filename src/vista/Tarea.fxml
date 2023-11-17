@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="455.0" prefWidth="702.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="control.TareaController">
+   <children>
+      <MenuBar prefHeight="25.0" prefWidth="702.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Salida">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Regresar al menú" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Pane layoutX="3.0" layoutY="34.0" prefHeight="65.0" prefWidth="696.0" style="-fx-background-color: #b70a0a; -fx-border-color: #ea6f6f;" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="28.0">
+         <children>
+            <Label layoutX="21.0" layoutY="-1.0" text="Base de datos:" textFill="WHITE">
+               <font>
+                  <Font name="Dubai Medium" size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cboBase" layoutX="21.0" layoutY="27.0" onAction="#doBaseMostrar" prefWidth="150.0" />
+            <ComboBox fx:id="cboTabla" layoutX="198.0" layoutY="27.0" onAction="#doTablaMostrar" prefWidth="150.0" />
+            <Label layoutX="198.0" layoutY="-1.0" text="Tabla:" textFill="WHITE">
+               <font>
+                  <Font name="Dubai Medium" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
