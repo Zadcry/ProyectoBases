@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package control;
 
 import java.io.IOException;
@@ -19,11 +15,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author aleja
- */
 public class UnravelController implements Initializable {
 
     @FXML
@@ -35,9 +26,6 @@ public class UnravelController implements Initializable {
     @FXML
     private VBox VBox;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -59,7 +47,7 @@ public class UnravelController implements Initializable {
             stage.setTitle("Unravel-a-data");
             stage.setScene(scene);
             stage.show();
-            var myStage=(Stage)this.VBox.getScene().getWindow();
+            Stage myStage=(Stage)this.VBox.getScene().getWindow();
             myStage.close();
         }
         catch(IOException ex)
@@ -71,7 +59,7 @@ public class UnravelController implements Initializable {
 
     @FXML
     private void doCerrar(ActionEvent event) {
-        var stage=(Stage)this.VBox.getScene().getWindow();
+        Stage stage=(Stage)this.VBox.getScene().getWindow();
         stage.close();
         System.exit(0);
 
