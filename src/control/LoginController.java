@@ -64,6 +64,13 @@ public class LoginController implements Initializable {
                     FXMLLoader loader= new FXMLLoader(getClass().getResource("/vista/Unravel.fxml"));
                     Parent root=loader.load();
                     Scene scene=new Scene (root);
+                                       
+                    conn.close();
+                    System.out.println("Disconnected from MySQL.");
+                    
+                    UnravelController unravelController = loader.getController();
+                    unravelController.receiveConection(this.Usuario, this.Contraseña);
+                                                    
                     stage.setTitle("Unravel-a-data");
                     stage.setScene(scene);
                     stage.show();

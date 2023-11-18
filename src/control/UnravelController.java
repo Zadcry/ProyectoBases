@@ -17,9 +17,14 @@ import javafx.stage.Stage;
 import control.LoginController;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import javafx.scene.control.Alert;
 
 public class UnravelController implements Initializable {
 
+    private String User;
+    private String Password;
+    private Connection conn;
     @FXML
     private MenuItem menItemIr;
     @FXML
@@ -81,6 +86,16 @@ public class UnravelController implements Initializable {
             Parent root=loader.load();
             Scene scene=new Scene (root);
             
+            try {
+                conn.close();
+                System.out.println("Disconnected from MySQL.");
+            } catch (SQLException ex) {
+                Logger.getLogger(UnravelController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                        
+            TareaController tareaController = loader.getController();
+            tareaController.receiveConection(this.User, this.Password);
+            
             stage.setTitle("Unravel-a-data");
             stage.setScene(scene);
             stage.show();
@@ -102,6 +117,16 @@ public class UnravelController implements Initializable {
             Parent root=loader.load();
             Scene scene=new Scene (root);
             
+            try {
+                conn.close();
+                System.out.println("Disconnected from MySQL.");
+            } catch (SQLException ex) {
+                Logger.getLogger(UnravelController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                        
+            ConsultaController consultaController = loader.getController();
+            consultaController.receiveConection(this.User, this.Password);
+            
             stage.setTitle("Unravel-a-data");
             stage.setScene(scene);
             stage.show();
@@ -110,6 +135,24 @@ public class UnravelController implements Initializable {
         }
         catch(IOException ex) {
             Logger.getLogger(UnravelController.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }
+
+    void receiveConection(String Usuario, String Contraseña) {
+        try {
+            this.User = Usuario;
+            this.Password = Contraseña;            
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/",Usuario,Contraseña);
+            if (conn != null){
+                System.out.println("Success");
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Ha ocurrido el error: "+e);
+            alert.setContentText("Verifique sus credenciales");
+            alert.showAndWait();
         }
     }
     
