@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package control;
 
 import java.io.IOException;
@@ -23,11 +19,6 @@ import Start.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-/**
- * FXML Controller class
- *
- * @author aleja
- */
 public class LoginController implements Initializable {
     public Connection conn;
     @FXML
@@ -44,12 +35,11 @@ public class LoginController implements Initializable {
 
     @FXML
     private void doEntrar(ActionEvent event) {
-        // BaseDeDatos = 
         String Usuario = txtUsuario.getText();
         String Contraseña = txtContraseña.getText();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/world"/*+BaseDeDatos*/,Usuario,Contraseña);
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/",Usuario,Contraseña);
         
             if (conn != null){
                 System.out.println("Success");

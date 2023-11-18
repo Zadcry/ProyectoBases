@@ -29,9 +29,11 @@ public class TareaController implements Initializable {
 
     
     
-    private void populateDatabases() {
+    /* private void populateDatabases() {
         try {
+            
             //No hay conexion de mysql en este punto
+            
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SHOW DATABASES");
 
@@ -44,7 +46,7 @@ public class TareaController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    } */
     
     @FXML
     private void doBaseMostrar(ActionEvent event) {
