@@ -2,3 +2,5 @@
 /test
 manifest.mf
 build.xml
+/build
+hs_err_pid22184.log
