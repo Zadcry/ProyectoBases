@@ -36,7 +36,7 @@ public class LoginController implements Initializable {
     private String Usuario;
     private String Contraseña;
     
-    public LoginController(String Usuario, String Contraseña) {
+    public LoginController() {
         this.Usuario = Usuario;
         this.Contraseña = Contraseña;
     }
