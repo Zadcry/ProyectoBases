@@ -9,14 +9,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.sql.*;
 
 /**
  *
  * @author aleja
  */
 public class Start extends Application{
-    public Connection conn;    public static void main(String[] args)
+    
+    public static void main(String[] args)
     {
         launch(args);
     }
