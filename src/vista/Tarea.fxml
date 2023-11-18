@@ -5,16 +5,17 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="455.0" prefWidth="702.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="control.TareaController">
+<AnchorPane id="AnchorPane" fx:id="ancTarea" prefHeight="455.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.TareaController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="702.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Salida">
+          <Menu fx:id="menItemSalir" mnemonicParsing="false" onAction="#doSalir" text="Salida">
             <items>
               <MenuItem mnemonicParsing="false" text="Regresar al menú" />
             </items>
@@ -35,6 +36,16 @@
                   <Font name="Dubai Medium" size="18.0" />
                </font>
             </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="14.0" layoutY="94.0" prefHeight="358.0" prefWidth="696.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="96.0">
+         <children>
+            <TableView fx:id="tblTarea" prefHeight="356.0" prefWidth="696.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
          </children>
       </Pane>
    </children>

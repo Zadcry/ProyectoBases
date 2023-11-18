@@ -13,23 +13,19 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="VBox" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.UnravelController">
+<VBox fx:id="VBox" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.UnravelController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="Inicio">
-          <items>
-            <MenuItem fx:id="menItemIr" mnemonicParsing="false" onAction="#doIr" text="Ir" />
-          </items>
-        </Menu>
         <Menu mnemonicParsing="false" text="Bases">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#SeleccionBases" text="Seleccionar" />
+            <MenuItem fx:id="menItemVisualizar" mnemonicParsing="false" onAction="#doVisualizar" text="Visualizar" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Consultas">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Cut" />
+                  <MenuItem fx:id="menItemHacer" mnemonicParsing="false" onAction="#doHacer" text="Hacer consulta" />
                   <MenuItem mnemonicParsing="false" text="Copy" />
                </items>
             </Menu>

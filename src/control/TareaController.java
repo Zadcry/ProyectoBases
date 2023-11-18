@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -26,12 +25,12 @@ public class TareaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
     }
-
     
-    
-    private void populateDatabases() {
+    /* private void populateDatabases() {
         try {
+            
             //No hay conexion de mysql en este punto
+            
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SHOW DATABASES");
 
@@ -44,7 +43,7 @@ public class TareaController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    } */
     
     @FXML
     private void doBaseMostrar(ActionEvent event) {
