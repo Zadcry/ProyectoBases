@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -26,8 +25,6 @@ public class TareaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
     }
-
-    
     
     /* private void populateDatabases() {
         try {

@@ -25,7 +25,14 @@ public class UnravelController implements Initializable {
     private MenuItem menItemCerrar;
     @FXML
     private VBox VBox;
+    @FXML
+    private MenuItem menItemVisualizar;
+    @FXML
+    private MenuItem menItemHacer;
 
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -66,8 +73,8 @@ public class UnravelController implements Initializable {
     }
 
     @FXML
-    private void SeleccionBases(ActionEvent event) {
-        try
+    private void doVisualizar(ActionEvent event) {
+    try
         {
             Stage stage=new Stage();
             FXMLLoader loader= new FXMLLoader(getClass().getResource("/vista/Tarea.fxml"));
@@ -84,5 +91,27 @@ public class UnravelController implements Initializable {
         {
             Logger.getLogger(UnravelController.class.getName()).log(Level.SEVERE,null,ex);
         }
-    }   
+    }
+
+    @FXML
+    private void doHacer(ActionEvent event) {
+    try
+        {
+            Stage stage=new Stage();
+            FXMLLoader loader= new FXMLLoader(getClass().getResource("/vista/Consulta.fxml"));
+            Parent root=loader.load();
+            Scene scene=new Scene (root);
+            
+            stage.setTitle("Unravel-a-data");
+            stage.setScene(scene);
+            stage.show();
+            Stage myStage=(Stage)this.VBox.getScene().getWindow();
+            myStage.close();
+        }
+        catch(IOException ex)
+        {
+            Logger.getLogger(UnravelController.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }
+    
 }
