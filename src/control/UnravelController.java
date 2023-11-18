@@ -14,6 +14,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import control.LoginController;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class UnravelController implements Initializable {
 
@@ -30,12 +33,9 @@ public class UnravelController implements Initializable {
     @FXML
     private MenuItem menItemHacer;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }    
 
     @FXML
@@ -95,8 +95,8 @@ public class UnravelController implements Initializable {
 
     @FXML
     private void doHacer(ActionEvent event) {
-    try
-        {
+        try {
+            
             Stage stage=new Stage();
             FXMLLoader loader= new FXMLLoader(getClass().getResource("/vista/Consulta.fxml"));
             Parent root=loader.load();
@@ -108,8 +108,7 @@ public class UnravelController implements Initializable {
             Stage myStage=(Stage)this.VBox.getScene().getWindow();
             myStage.close();
         }
-        catch(IOException ex)
-        {
+        catch(IOException ex) {
             Logger.getLogger(UnravelController.class.getName()).log(Level.SEVERE,null,ex);
         }
     }

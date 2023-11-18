@@ -2,6 +2,9 @@ package control;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,9 +46,21 @@ public class ConsultaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        LoginController loginController = new LoginController("Hola","123"); 
+        String usuario = loginController.getUser();
+        String pass = loginController.getPass();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/",usuario,pass);
+        } catch (Exception e) {
+            System.out.println("No se pudo rey, pass es:"+pass+" user es: "+usuario);;
+        }
     }    
-
+    private void conexion(String username, String pass) throws ClassNotFoundException, SQLException{
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/",username,pass);
+    }
+    
     @FXML
     private void doRegresar(ActionEvent event) {
     try

@@ -31,12 +31,28 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-
+    }
+    
+    private String Usuario;
+    private String Contraseña;
+    
+    public LoginController(String Usuario, String Contraseña) {
+        this.Usuario = Usuario;
+        this.Contraseña = Contraseña;
+    }
+    
     @FXML
-    private void doEntrar(ActionEvent event) throws IOException, ClassNotFoundException {
-        String Usuario = txtUsuario.getText();
-        String Contraseña = txtContraseña.getText();
+    public void doEntrar(ActionEvent event) throws IOException, ClassNotFoundException {
+        Usuario = txtUsuario.getText();
+        Contraseña = txtContraseña.getText();
+        if ((Usuario != null) && (Contraseña != null)) {
+            setUser(Usuario);
+            setPassword(Contraseña);
+            System.out.println(Usuario+""+Contraseña);
+        }
+        else {
+            System.out.println("NOKAs BRODY");
+        }
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/",Usuario,Contraseña);
@@ -65,7 +81,18 @@ public class LoginController implements Initializable {
             alert.setContentText("Verifique sus credenciales");
             alert.showAndWait();
         }
-        
     }
+    public void setUser(String User) {
+        this.Usuario = User;
     }
+    public void setPassword(String Pass) {
+        this.Contraseña = Pass;
+    }
+    public String getUser() {
+        return this.Usuario;
+    }
+    public String getPass() {
+        return this.Contraseña;
+    }
+}    
     

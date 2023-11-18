@@ -23,6 +23,5 @@ public class Start extends Application{
         ventana.setResizable(false);
                 
         ventana.show();
-    }
-    
+    }   
 }
