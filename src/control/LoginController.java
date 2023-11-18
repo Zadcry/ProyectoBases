@@ -14,9 +14,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.sql.*;
+import Start.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class LoginController implements Initializable {
-
+    public Connection conn;
     @FXML
     private TextField txtUsuario;
     @FXML
@@ -24,18 +28,33 @@ public class LoginController implements Initializable {
     @FXML
     private Button btnEntrar;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
 
     @FXML
     private void doEntrar(ActionEvent event) {
-        try
-        {
+        // BaseDeDatos = 
+        String Usuario = txtUsuario.getText();
+        String Contraseña = txtContraseña.getText();
+        try {
+            Class.forName("com.mysql.cj.dbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/world"/*+BaseDeDatos*/,Usuario,Contraseña);
+        
+            if (conn != null){
+                System.out.println("Success");
+            }
+        }
+        catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Se ha producido un error");
+            alert.setContentText("Por favor verifique sus credenciales");
+            alert.showAndWait();
+        }
+        
+        try {
             Stage stage=new Stage();
             FXMLLoader loader= new FXMLLoader(getClass().getResource("/vista/Unravel.fxml"));
             Parent root=loader.load();
