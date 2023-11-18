@@ -48,37 +48,35 @@ public class LoginController implements Initializable {
         String Usuario = txtUsuario.getText();
         String Contraseña = txtContraseña.getText();
         try {
-            Class.forName("com.mysql.cj.dbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/world"/*+BaseDeDatos*/,Usuario,Contraseña);
         
             if (conn != null){
                 System.out.println("Success");
+                try {
+                    Stage stage=new Stage();
+                    FXMLLoader loader= new FXMLLoader(getClass().getResource("/vista/Unravel.fxml"));
+                    Parent root=loader.load();
+                    Scene scene=new Scene (root);
+            
+                    stage.setTitle("Unravel-a-data");
+                    stage.setScene(scene);
+                    stage.show();
+                    Stage myStage=(Stage)this.btnEntrar.getScene().getWindow();
+                    myStage.close();
+                }
+                catch(IOException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE,null,ex);
+                }
             }
         }
         catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("ERROR");
-            alert.setHeaderText("Se ha producido un error");
+            alert.setHeaderText("Se ha producido un error: "+e);
             alert.setContentText("Por favor verifique sus credenciales");
             alert.showAndWait();
         }
-        
-        try {
-            Stage stage=new Stage();
-            FXMLLoader loader= new FXMLLoader(getClass().getResource("/vista/Unravel.fxml"));
-            Parent root=loader.load();
-            Scene scene=new Scene (root);
-            
-            stage.setTitle("Unravel-a-data");
-            stage.setScene(scene);
-            stage.show();
-            Stage myStage=(Stage)this.btnEntrar.getScene().getWindow();
-            myStage.close();
         }
-        catch(IOException ex)
-        {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE,null,ex);
-        }
-    }
     }
     
