@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ */
 package control;
 
 import java.io.IOException;
@@ -19,6 +23,11 @@ import Start.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * FXML Controller class
+ *
+ * @author aleja
+ */
 public class LoginController implements Initializable {
     public Connection conn;
     @FXML
