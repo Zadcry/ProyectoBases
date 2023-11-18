@@ -46,7 +46,7 @@ public class ConsultaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        LoginController loginController = new LoginController("Hola","123"); 
+        LoginController loginController = new LoginController(); 
         String usuario = loginController.getUser();
         String pass = loginController.getPass();
         try {
