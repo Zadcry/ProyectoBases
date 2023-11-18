@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package control;
 
 import java.net.URL;
@@ -11,26 +7,45 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 
-/**
- * FXML Controller class
- *
- * @author aleja
- */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TareaController implements Initializable {
 
     @FXML
-    private ComboBox<?> cboBase;
+    private ComboBox<String> cboBase;
     @FXML
     private ComboBox<?> cboTabla;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        
+    }
 
+    
+    
+    private void populateDatabases() {
+        try {
+            //No hay conexion de mysql en este punto
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SHOW DATABASES");
+
+            List<String> databases = new ArrayList<>();
+            while (resultSet.next()) {
+                databases.add(resultSet.getString(1));
+            }
+
+            cboBase.getItems().addAll(databases);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     @FXML
     private void doBaseMostrar(ActionEvent event) {
     }

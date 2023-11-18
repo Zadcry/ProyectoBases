@@ -64,5 +64,25 @@ public class UnravelController implements Initializable {
         System.exit(0);
 
     }
-    
+
+    @FXML
+    private void SeleccionBases(ActionEvent event) {
+        try
+        {
+            Stage stage=new Stage();
+            FXMLLoader loader= new FXMLLoader(getClass().getResource("/vista/Tarea.fxml"));
+            Parent root=loader.load();
+            Scene scene=new Scene (root);
+            
+            stage.setTitle("Unravel-a-data");
+            stage.setScene(scene);
+            stage.show();
+            Stage myStage=(Stage)this.VBox.getScene().getWindow();
+            myStage.close();
+        }
+        catch(IOException ex)
+        {
+            Logger.getLogger(UnravelController.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }   
 }
