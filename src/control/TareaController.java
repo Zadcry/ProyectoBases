@@ -93,16 +93,12 @@ public class TareaController implements Initializable {
 
         alert.showAndWait().ifPresent(response -> {
             if (response == createButton) {
-                    System.out.println("Selected: " + response.getText());
                 Alert createAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 createAlert.setTitle("Crear Base de Datos");
                 createAlert.setHeaderText("Ingrese el nombre de la nueva Base de Datos:");
 
                 TextField inputField = new TextField();
                 createAlert.getDialogPane().setContent(inputField);
-
-                ButtonType createBaseButton = new ButtonType("Crear");
-                ButtonType cancelBaseButton = new ButtonType("Cancelar");
                 createAlert.getButtonTypes().setAll(createButton, cancelButton);
 
                 Optional<ButtonType> result = createAlert.showAndWait();
@@ -143,9 +139,6 @@ public class TareaController implements Initializable {
 
                 cboBaseEliminar.getItems().addAll(databases);
                 deleteAlert.getDialogPane().setContent(cboBaseEliminar);
-
-                ButtonType deleteBaseButton = new ButtonType("Eliminar");
-                ButtonType cancelBaseButton = new ButtonType("Cancelar");
                 deleteAlert.getButtonTypes().setAll(deleteButton, cancelButton);
                 
                 Optional<ButtonType> result = deleteAlert.showAndWait();
@@ -163,6 +156,11 @@ public class TareaController implements Initializable {
                                     Statement statement = conn.createStatement();
                                     String sql = "DROP DATABASE " + dbName;
                                     statement.executeUpdate(sql);
+                                    Alert confAlert = new Alert(Alert.AlertType.INFORMATION);
+                                    confAlert.setTitle("Confirmacion");
+                                    confAlert.setHeaderText("Base de Datos Eliminada con Exito");
+                                    confAlert.setContentText("");
+                                    confAlert.showAndWait();
                                     System.out.println("Database deleted successfully: " + dbName);
                                     populateDatabases();
                                 } catch (SQLException e) {
@@ -173,6 +171,11 @@ public class TareaController implements Initializable {
                             }
                         });
                     } else {
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                        errorAlert.setTitle("Error");
+                        errorAlert.setHeaderText("Error: No se ha escogido una base de datos");
+                        errorAlert.setContentText("Por favor selecciona una base de datos antes de eliminarla");
+                        errorAlert.show();
                         System.out.println("Please select a valid database to delete.");
                     }
                 }
@@ -195,7 +198,6 @@ public class TareaController implements Initializable {
         String Base = cboBase.getValue();
         alert.showAndWait().ifPresent(response -> {
             if (response == createButton && Base != null && !Base.isEmpty()) {
-                    System.out.println("Selected: " + response.getText());
                 try {
                     Stage stage=new Stage();
                     FXMLLoader loader= new FXMLLoader(getClass().getResource("/vista/Administrar.fxml"));
@@ -238,6 +240,11 @@ public class TareaController implements Initializable {
                             try (Statement statement = conn.createStatement()) {
                                 statement.executeUpdate(deleteQuery);
                                 System.out.println("Table '" + tableName + "' deleted successfully!");
+                                Alert confAlert = new Alert(Alert.AlertType.INFORMATION);
+                                confAlert.setTitle("Confirmacion");
+                                confAlert.setHeaderText("Tabla Eliminada con Exito");
+                                confAlert.setContentText("");
+                                confAlert.showAndWait();
                             } catch (SQLException e) {
                                 System.err.println("Error deleting table: " + e.getMessage());                                
                             }

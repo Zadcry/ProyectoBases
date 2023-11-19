@@ -133,44 +133,63 @@ public class AdministrarController implements Initializable {
 
     @FXML
     private void doAceptar(ActionEvent event) {
-        try {
-            Statement state = conn.createStatement();
-            state.execute("USE " + this.Database);
-            int maxColumns = Integer.parseInt(cboColumnas.getValue()); 
-            
-            String tableName = tfTabla.getText(); 
+        String tableName = tfTabla.getText();
+        boolean failedQuery = false;
+        if(tableName!=null && !tableName.isEmpty()){
+            try {
+                Statement state = conn.createStatement();
+                state.execute("USE " + this.Database);
+                int maxColumns = Integer.parseInt(cboColumnas.getValue()); 
 
-            StringBuilder query = new StringBuilder("CREATE TABLE " + tableName + " (");
 
-            for (int i = 0; i < maxColumns; i++) {
-                String columnName = nameTextFields[i].getText();
-                String columnType = typeComboBoxes[i].getValue(); 
 
-                if (!columnName.isEmpty() && columnType != null) {
-                    query.append(columnName).append(" ").append(columnType);
-                    if (i < maxColumns - 1) {
-                        query.append(", ");
+                StringBuilder query = new StringBuilder("CREATE TABLE " + tableName + " (");
+
+                for (int i = 0; i < maxColumns; i++) {
+                    String columnName = nameTextFields[i].getText();
+                    String columnType = typeComboBoxes[i].getValue(); 
+
+                    if (!columnName.isEmpty() && columnType != null) {
+                        query.append(columnName).append(" ").append(columnType);
+                        if (i < maxColumns - 1) {
+                            query.append(", ");
+                        }
+                    }else{
+                        failedQuery = true;
                     }
                 }
-            }
-            query.append(")");
-            
-            try (Statement statement = conn.createStatement()) {
-                statement.executeUpdate(query.toString());
-                System.out.println("Table created successfully!");
-                
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Confirmacion");
-                alert.setHeaderText("Tabla Creada con Exito");
-                alert.setContentText("");
-                alert.showAndWait();
-                volver();
+                query.append(")");
+                if(!failedQuery){
+                    try (Statement statement = conn.createStatement()) {
+                        statement.executeUpdate(query.toString());
+                        System.out.println("Table created successfully!");
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Confirmacion");
+                        alert.setHeaderText("Tabla Creada con Exito");
+                        alert.setContentText("");
+                        alert.showAndWait();
+                        volver();
+                    } catch (SQLException e) {
+                        System.err.println("Error executing query: " + e.getMessage());
+                    }
+                }else{
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Error");
+                    errorAlert.setHeaderText("Error: Alguna columna no tiene nombre");
+                    errorAlert.setContentText("Por favor asigna un nombre a todas las columnas");
+                    errorAlert.show();
+                }    
             } catch (SQLException e) {
-                System.err.println("Error executing query: " + e.getMessage());
+                System.err.println("Connection failed: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            System.err.println("Connection failed: " + e.getMessage());
-        }
+        }else{
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setHeaderText("Error: La tabla no tiene nombre");
+            errorAlert.setContentText("Por favor pon un nombre a la tabla antes de crearla");
+            errorAlert.show();
+        }    
     }
 
     void receiveConection(String Database, String User, String Password) {
