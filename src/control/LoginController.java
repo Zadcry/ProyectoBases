@@ -48,7 +48,6 @@ public class LoginController implements Initializable {
         if ((Usuario != null) && (Contraseña != null)) {
             setUser(Usuario);
             setPassword(Contraseña);
-            System.out.println(Usuario+""+Contraseña);
         }
         else {
             System.out.println("NOKAs BRODY");
