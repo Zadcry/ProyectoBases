@@ -113,7 +113,7 @@ public class AdministrarController implements Initializable {
             stage.setTitle("Unravel-a-data");
             stage.setScene(scene);
             stage.show();
-            var myStage=(Stage)this.ancPane.getScene().getWindow();
+            Stage myStage=(Stage)this.ancPane.getScene().getWindow();
             myStage.close();
         }
         catch(IOException ex)

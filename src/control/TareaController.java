@@ -264,7 +264,7 @@ public class TareaController implements Initializable {
             stage.setTitle("Unravel-a-data");
             stage.setScene(scene);
             stage.show();
-            var myStage=(Stage)this.ancTarea.getScene().getWindow();
+            Stage myStage=(Stage)this.ancTarea.getScene().getWindow();
             myStage.close();
         }
         catch(IOException ex)
