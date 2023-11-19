@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class AdministrarController implements Initializable {
 
@@ -68,8 +69,10 @@ public class AdministrarController implements Initializable {
         ComboBox<String>[] typeComboBoxes = rawTypeComboBoxes;
         TextField[] nameTextFields = {tf1, tf2, tf3, tf4, tf5, tf6, tf7, tf8, tf9};
         
+        this.rawTypeComboBoxes = rawTypeComboBoxes;
         this.typeComboBoxes = typeComboBoxes;
         this.nameTextFields = nameTextFields;
+        cantidadCampos();
         
         String[] columnTypes = {"VARCHAR(50)", "INT", "FLOAT", "DATE", "TIME"};
         
@@ -77,22 +80,28 @@ public class AdministrarController implements Initializable {
             typeComboBoxes[i].setItems(FXCollections.observableArrayList(columnTypes));
         }
     }
-
-    @FXML
-    private void cambiarColumnas(ActionEvent event) {
+    
+    private void cantidadCampos(){
         int newValue = (Integer.parseInt(cboColumnas.getValue()));
-        System.out.println(newValue);
         for (int i = 0; i < typeComboBoxes.length; i++) {
-            System.out.println(i);
             typeComboBoxes[i].setVisible(i < newValue);
             typeComboBoxes[i].setManaged(i < newValue);
             nameTextFields[i].setVisible(i < newValue);
             nameTextFields[i].setManaged(i < newValue);
         }
     }
+
+    @FXML
+    private void cambiarColumnas(ActionEvent event) {
+        cantidadCampos();
+    }
     
     @FXML
     private void doSalir(ActionEvent event) {
+        volver();
+    }
+    
+    private void volver(){
         try
         {
             Stage stage=new Stage();
@@ -124,13 +133,52 @@ public class AdministrarController implements Initializable {
 
     @FXML
     private void doAceptar(ActionEvent event) {
-        System.out.println("Tabla Creada");
+        try {
+            Statement state = conn.createStatement();
+            state.execute("USE " + this.Database);
+            int maxColumns = Integer.parseInt(cboColumnas.getValue()); 
+            
+            String tableName = tfTabla.getText(); 
+
+            StringBuilder query = new StringBuilder("CREATE TABLE " + tableName + " (");
+
+            for (int i = 0; i < maxColumns; i++) {
+                String columnName = nameTextFields[i].getText();
+                String columnType = typeComboBoxes[i].getValue(); 
+
+                if (!columnName.isEmpty() && columnType != null) {
+                    query.append(columnName).append(" ").append(columnType);
+                    if (i < maxColumns - 1) {
+                        query.append(", ");
+                    }
+                }
+            }
+            query.append(")");
+            
+            try (Statement statement = conn.createStatement()) {
+                statement.executeUpdate(query.toString());
+                System.out.println("Table created successfully!");
+                
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Confirmacion");
+                alert.setHeaderText("Tabla Creada con Exito");
+                alert.setContentText("");
+                alert.showAndWait();
+                volver();
+            } catch (SQLException e) {
+                System.err.println("Error executing query: " + e.getMessage());
+            }
+        } catch (SQLException e) {
+            System.err.println("Connection failed: " + e.getMessage());
+        }
     }
 
     void receiveConection(String Database, String User, String Password) {
         try {
             this.User = User;
-            this.Password = Password;            
+            this.Password = Password;      
+            this.Database = Database;
+            this.tfBase.setPromptText(this.Database);
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/",User,Password);
             if (conn != null){

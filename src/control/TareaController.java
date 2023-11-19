@@ -184,7 +184,7 @@ public class TareaController implements Initializable {
     private void adminTabla(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Selecciona");
-        alert.setHeaderText("Elije crear o eliminar una tabla:");
+        alert.setHeaderText("Elige crear o eliminar una tabla:");
         alert.setContentText("Escoge una accion:");
 
         ButtonType createButton = new ButtonType("Crear");
@@ -192,9 +192,9 @@ public class TareaController implements Initializable {
         ButtonType cancelButton = new ButtonType("Cancelar");
 
         alert.getButtonTypes().setAll(createButton, deleteButton, cancelButton);
-
+        String Base = cboBase.getValue();
         alert.showAndWait().ifPresent(response -> {
-            if (response == createButton) {
+            if (response == createButton && Base != null && !Base.isEmpty()) {
                     System.out.println("Selected: " + response.getText());
                 try {
                     Stage stage=new Stage();
@@ -208,8 +208,7 @@ public class TareaController implements Initializable {
                     } catch (SQLException ex) {
                         Logger.getLogger(UnravelController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
-                    String Base = cboBase.getValue();
+                   
                     AdministrarController administrarController = loader.getController();
                     administrarController.receiveConection(Base,this.User, this.Password);
 
@@ -224,20 +223,42 @@ public class TareaController implements Initializable {
                 }
                 
             } else if (response == deleteButton) {
-                Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-                confirmation.setTitle("Confirmacion");
-                confirmation.setHeaderText("Confirmar Eliminacion");
-                confirmation.setContentText("Estas seguro de eliminar la tabla "+cboTabla.getValue()+"?");
+                String tableName = cboTabla.getValue();
+                if(tableName != null && !tableName.isEmpty()){
+                    Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+                    confirmation.setTitle("Confirmacion");
+                    confirmation.setHeaderText("Confirmar Eliminacion");
+                    confirmation.setContentText("Estas seguro de eliminar la tabla "+cboTabla.getValue()+"?");
 
-                confirmation.showAndWait().ifPresent(result -> {
-                    if (result == ButtonType.OK) {
-                        System.out.println("Delete confirmed");
-                        // Perform the delete operation or show appropriate action
-                    } else {
-                        System.out.println("Delete canceled");
-                        // Perform other actions as needed
-                    }
-                });
+                    confirmation.showAndWait().ifPresent(result -> {
+                        if (result == ButtonType.OK) {
+                            System.out.println("Delete confirmed");
+                            String deleteQuery = "DROP TABLE " + tableName;
+
+                            try (Statement statement = conn.createStatement()) {
+                                statement.executeUpdate(deleteQuery);
+                                System.out.println("Table '" + tableName + "' deleted successfully!");
+                            } catch (SQLException e) {
+                                System.err.println("Error deleting table: " + e.getMessage());                                
+                            }
+                            populateTables(Base);
+                        } else {
+                            System.out.println("Delete canceled");
+                        }
+                    });
+                } else{
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Error");
+                    errorAlert.setHeaderText("Error: No se ha escogido una tabla");
+                    errorAlert.setContentText("Por favor selecciona una tabla antes de eliminarla");
+                    errorAlert.show();
+                }             
+            } else{
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText("Error: No se ha escogido una base de datos");
+                errorAlert.setContentText("Por favor selecciona una base de datos antes de crear una tabla");
+                errorAlert.show();
             }
         });        
     }
