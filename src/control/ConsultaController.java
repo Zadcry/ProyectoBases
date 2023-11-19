@@ -68,17 +68,7 @@ public class ConsultaController implements Initializable {
     private Button btnConsultar;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        /*LoginController loginController = new LoginController(); 
-        String usuario = loginController.getUser();
-        String pass = loginController.getPass();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/",usuario,pass);
-        } catch (Exception e) {
-            System.out.println("No se pudo rey, pass es:"+pass+" user es: "+usuario);;
-        }*/
-        
+    public void initialize(URL url, ResourceBundle rb) {       
         this.llenarCombos();
     }    
     private void conexion(String username, String pass) throws ClassNotFoundException, SQLException{
@@ -133,29 +123,12 @@ public class ConsultaController implements Initializable {
             }
     }
 
-    @FXML
-    private void doAtributoMostrar(ActionEvent event) {
-    }
-
-    @FXML
-    private void doCond1Mostrar(ActionEvent event) {
-        
-    }
-
-    @FXML
-    private void doCond2Mostrar(ActionEvent event) {
-       
-    }
-
     void receiveConection(String Usuario, String Contraseña) {
         try {
             this.User = Usuario;
             this.Password = Contraseña;            
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/",Usuario,Contraseña);
-            if (conn != null){
-                System.out.println("Success");
-            }
             populateDatabases();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -184,7 +157,7 @@ public class ConsultaController implements Initializable {
     }
     
      private void populateTables(String databaseName) {
-        cboConTabla.getItems().clear(); // Clear previous items
+        cboConTabla.getItems().clear(); 
 
         try {
             Statement statement = conn.createStatement();
@@ -196,14 +169,13 @@ public class ConsultaController implements Initializable {
             while (resultSet.next()) {
                 tables.add(resultSet.getString(1));
             }
-            System.out.println(tables);
             cboConTabla.getItems().addAll(tables);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
       private void populateAtributes(String databaseName,  String tableName) {
-        cboAtri.getItems().clear(); // Clear previous items
+        cboAtri.getItems().clear(); 
 
         try {
             Statement statement = conn.createStatement();
@@ -215,11 +187,7 @@ public class ConsultaController implements Initializable {
             while (resultSet.next()) {
                 int i=0;
                 atri.add(resultSet.getString(1));
-                System.out.println(resultSet.getString(1));
-                //TableColumn i++ = new TableColumn(resultSet.getString(1));
             }
-            //tblConsulta.getColumns().add;
-            System.out.println(atri);
             cboAtri.getItems().addAll(atri);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -239,10 +207,8 @@ public class ConsultaController implements Initializable {
             }
             if(Conector!=null)
             {
-            System.out.println("SELECT * FROM "+tableName+" WHERE "+AtributeName+Condicion1+Complemento1+" "+Conector+" "+AtributeName+Condicion2+Complemento2);
             resultSet = statement.executeQuery("SELECT * FROM "+tableName+" WHERE "+AtributeName+Condicion1+Complemento1+" "+Conector+" "+AtributeName+Condicion2+Complemento2);            
             } else {  
-            System.out.println("SELECT * FROM "+tableName+" WHERE "+AtributeName+Condicion1+Complemento1);           
             resultSet = statement.executeQuery("SELECT * FROM "+tableName+" WHERE "+AtributeName+Condicion1+Complemento1);
             } 
             for(int i=0; i<resultSet.getMetaData().getColumnCount();i++){
@@ -296,31 +262,6 @@ public class ConsultaController implements Initializable {
         this.cboCond2.getItems().add("IS NOT NULL");
         this.cboConector.getItems().add("AND");
         this.cboConector.getItems().add("OR");
-    }
-    public void cargarConsulta(String databaseName,  String tableName) {
-        
-        try{
-                    
-        tblConsulta.getItems().clear();
-        tblConsulta.getColumns().clear();
-        Statement statement = conn.createStatement();
-        statement.execute("USE " + databaseName);
-        
-        ResultSet resultSet = statement.executeQuery("DESCRIBE " + tableName);
-        
-        List<String> columnas = new ArrayList<>();
-        while (resultSet.next()) {
-                columnas.add(resultSet.getString(1));
-            }
-        tblConsulta.getItems().addAll(columnas);
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-    }  
-
-    @FXML
-    private void doConector(ActionEvent event) {
     }
 
     @FXML
