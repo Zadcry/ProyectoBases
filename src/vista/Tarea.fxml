@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="ancTarea" prefHeight="455.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.TareaController">
+<AnchorPane id="AnchorPane" fx:id="ancTarea" prefHeight="455.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.TareaController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="702.0">
         <menus>
@@ -36,6 +37,8 @@
                   <Font name="Dubai Medium" size="18.0" />
                </font>
             </Label>
+            <Button fx:id="btnBase" layoutX="382.0" layoutY="27.0" mnemonicParsing="false" onAction="#adminBase" prefHeight="25.0" prefWidth="121.0" text="Administrar Base" />
+            <Button fx:id="btnTabla" layoutX="522.0" layoutY="27.0" mnemonicParsing="false" onAction="#adminTabla" prefHeight="25.0" prefWidth="121.0" text="Administrar Tabla" />
          </children>
       </Pane>
       <Pane layoutX="14.0" layoutY="94.0" prefHeight="358.0" prefWidth="696.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="96.0">
