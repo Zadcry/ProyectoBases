@@ -12,6 +12,10 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,16 +26,21 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ConsultaController implements Initializable {
 
     private String User;
     private String Password;
     private Connection conn;
+    private ObservableList<ObservableList> data;
+ 
     
     @FXML
     private ComboBox<String> cboConBase;
@@ -50,7 +59,7 @@ public class ConsultaController implements Initializable {
     @FXML
     private MenuItem menItemRegresar;
     @FXML
-    private TableView<String> tblConsulta;
+    private TableView tblConsulta;
     @FXML
     private AnchorPane ancConsulta;
     @FXML
@@ -218,6 +227,7 @@ public class ConsultaController implements Initializable {
     }
     private void hacerConsulta(String databaseName, String tableName, String AtributeName, String Condicion1,String Complemento1,String Conector, String Condicion2, String Complemento2)
     {
+        data = FXCollections.observableArrayList();
         ResultSet resultSet = null;
         try {
             Statement statement = conn.createStatement();
@@ -235,19 +245,27 @@ public class ConsultaController implements Initializable {
             System.out.println("SELECT * FROM "+tableName+" WHERE "+AtributeName+Condicion1+Complemento1);           
             resultSet = statement.executeQuery("SELECT * FROM "+tableName+" WHERE "+AtributeName+Condicion1+Complemento1);
             } 
+            for(int i=0; i<resultSet.getMetaData().getColumnCount();i++){
+                final int j=i;
+                TableColumn col = new TableColumn(resultSet.getMetaData().getColumnName(i+1));
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
+                });
+                
+                tblConsulta.getColumns().addAll(col);
+            }
             while(resultSet.next())
             {
-                System.out.println(resultSet.getString(1));
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for(int i=1; i<=resultSet.getMetaData().getColumnCount();i++)
+                {
+                    row.add(resultSet.getString(i));
+                }
+                data.add(row);
             }
-            /*while(columnSet.next())
-            {
-                System.out.println("1");//columnSet.getString(1));
-            }
-            for(int i=0;i>=Columnas.size();i++)
-            {
-                System.out.println(columnSet.getString(i));
-            }*/
-            
+            tblConsulta.setItems(data);
         } catch (SQLException e) {
             e.printStackTrace();
         }
