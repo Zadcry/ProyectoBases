@@ -253,6 +253,7 @@ public class RelacionController implements Initializable {
     }
         private void hacerConsulta(String databaseName, String tableName1, String tableName2, String AtributeName1, String AtributeName2,String AtributeName3, String AtributeName4)
     {
+        tblConsulta.setItems(null);
         data = FXCollections.observableArrayList();
         ResultSet resultSet = null;
         try {
@@ -270,7 +271,8 @@ public class RelacionController implements Initializable {
             }
             if(rbt1.isSelected())
             {
-            resultSet = statement.executeQuery("SELECT * FROM "+tableName1+", "+tableName2+" WHERE "+AtributeName1+" = "+AtributeName2);               
+            resultSet = statement.executeQuery("SELECT * FROM "+tableName1+", "+tableName2+" WHERE "+tableName1+"."+AtributeName1+" = "+tableName2+"."+AtributeName2);               
+            System.out.println("SELECT * FROM "+tableName1+", "+tableName2+" WHERE "+AtributeName1+" = "+AtributeName2);
             } else {  
             resultSet = statement.executeQuery("SELECT * FROM "+tableName1+","+tableName2+" WHERE "+tableName1+"."+AtributeName1+"="+tableName2+"."+AtributeName2+" AND "+AtributeName3+" = "+AtributeName4);            
             } 
