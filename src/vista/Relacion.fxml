@@ -71,7 +71,7 @@
                   <Font name="Dubai Medium" size="14.0" />
                </font>
             </RadioButton>
-            <Label fx:id="txtAtri12" disable="true" layoutX="150.0" layoutY="326.0" text="Atributo:" textFill="WHITE">
+            <Label disable="true" layoutX="150.0" layoutY="326.0" text="Atributo:" textFill="WHITE">
                <font>
                   <Font name="Dubai Medium" size="18.0" />
                </font>
