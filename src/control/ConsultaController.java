@@ -195,6 +195,7 @@ public class ConsultaController implements Initializable {
     }
     private void hacerConsulta(String databaseName, String tableName, String AtributeName, String Condicion1,String Complemento1,String Conector, String Condicion2, String Complemento2)
     {
+        tblConsulta.setItems(null);
         data = FXCollections.observableArrayList();
         ResultSet resultSet = null;
         try {
@@ -207,9 +208,11 @@ public class ConsultaController implements Initializable {
             }
             if(Conector!=null)
             {
-            resultSet = statement.executeQuery("SELECT * FROM "+tableName+" WHERE "+AtributeName+Condicion1+Complemento1+" "+Conector+" "+AtributeName+Condicion2+Complemento2);            
-            } else {  
-            resultSet = statement.executeQuery("SELECT * FROM "+tableName+" WHERE "+AtributeName+Condicion1+Complemento1);
+            resultSet = statement.executeQuery("SELECT * FROM "+tableName+" WHERE "+AtributeName+" "+Condicion1+" "+Complemento1+" "+Conector+" "+AtributeName+Condicion2+Complemento2);            
+            } else { 
+            System.out.println("SELECT * FROM "+tableName+" WHERE "+AtributeName+"  "+Condicion1+"  "+Complemento1);
+            resultSet = statement.executeQuery("SELECT * FROM "+tableName+" WHERE "+AtributeName+" "+Condicion1+" "+Complemento1);
+            
             } 
             for(int i=0; i<resultSet.getMetaData().getColumnCount();i++){
                 final int j=i;
@@ -246,7 +249,7 @@ public class ConsultaController implements Initializable {
         this.cboCond1.getItems().add("=");
         this.cboCond1.getItems().add("<>");
         this.cboCond1.getItems().add("LIKE");
-        this.cboCond1.getItems().add("NO LIKE");
+        this.cboCond1.getItems().add("NOT LIKE");
         this.cboCond1.getItems().add("IS NULL");
         this.cboCond1.getItems().add("NOT NULL");
         this.cboCond2.getItems().add("");
