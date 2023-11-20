@@ -26,8 +26,6 @@ public class UnravelController implements Initializable {
     private String Password;
     private Connection conn;
     @FXML
-    private MenuItem menItemIr;
-    @FXML
     private MenuItem menItemVolver;
     @FXML
     private MenuItem menItemCerrar;
@@ -37,15 +35,14 @@ public class UnravelController implements Initializable {
     private MenuItem menItemVisualizar;
     @FXML
     private MenuItem menItemHacer;
+    @FXML
+    private MenuItem menItemRelacion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
     }    
 
-    @FXML
-    private void doIr(ActionEvent event) {
-    }
 
     @FXML
     private void doVolver(ActionEvent event) {
@@ -154,6 +151,38 @@ public class UnravelController implements Initializable {
             alert.setContentText("Verifique sus credenciales");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void doRelacion(ActionEvent event) {
+        {
+        try {
+            
+            Stage stage=new Stage();
+            FXMLLoader loader= new FXMLLoader(getClass().getResource("/vista/Relacion.fxml"));
+            Parent root=loader.load();
+            Scene scene=new Scene (root);
+            
+            try {
+                conn.close();
+                System.out.println("Disconnected from MySQL.");
+            } catch (SQLException ex) {
+                Logger.getLogger(UnravelController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                        
+            RelacionController relacionController = loader.getController();
+            relacionController.receiveConection(this.User, this.Password);
+            
+            stage.setTitle("Unravel-a-data");
+            stage.setScene(scene);
+            stage.show();
+            Stage myStage=(Stage)this.VBox.getScene().getWindow();
+            myStage.close();
+        }
+        catch(IOException ex) {
+            Logger.getLogger(UnravelController.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }
     }
     
 }
